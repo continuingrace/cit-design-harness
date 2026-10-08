@@ -1,0 +1,24 @@
+name: Harness preflight
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 소스 체크아웃
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Node.js 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: 저장소 전체 검사 실행
+        run: npm run preflight

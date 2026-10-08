@@ -1,0 +1,31 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/check-harness.mjs"],
+            "timeout": 20,
+            "statusMessage": "하네스 자가검증"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": ".*[Ff]igma.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/block-figma-write.mjs"],
+            "timeout": 15,
+            "statusMessage": "Figma 쓰기 검사"
+          }
+        ]
+      }
+    ]
+  }
+}

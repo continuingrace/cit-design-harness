@@ -1,0 +1,57 @@
+{
+  "_comment": "이 하네스가 '있다고 선언하는' 것들. check-harness.mjs 가 실제 파일과 대조한다. 선언과 실재가 갈라지는 것이 ds-harness 가 3개월간 빈 채로 돌았던 원인이었다.",
+  "name": "cit-design-harness",
+  "version": "0.1.6",
+  "ssot": "design-language.md",
+  "requires": {
+    "files": [
+      "design-language.md",
+      "spec.json",
+      "figma-inventory.mjs",
+      "check-harness.mjs",
+      "block-figma-write.mjs",
+      "test-block-figma-write.mjs",
+      "files.json",
+      "HANDOFF.md"
+    ],
+    "skills": [
+      "palette",
+      "route",
+      "preflight"
+    ],
+    "hooks": [
+      "SessionStart",
+      "PreToolUse"
+    ]
+  },
+  "gates": [
+    {
+      "id": "A",
+      "name": "산출 전 — 규칙 주입",
+      "when": "새 작업을 시작할 때",
+      "by": "palette 스킬",
+      "checks": [
+        "세트 배색 선언",
+        "템플릿 선택",
+        "확정 규칙 주입"
+      ]
+    },
+    {
+      "id": "B",
+      "name": "익스포트 전 — 검수",
+      "when": "JPEG/PNG 내보내기 직전",
+      "by": "preflight 스킬",
+      "checks": [
+        "규격·마진·자간 수치 검사",
+        "세트 내 채널 간 일치",
+        "일러스트 연속성"
+      ]
+    }
+  ],
+  "notes": [
+    "게이트는 2개다. 4개는 강의 시연용이고 실무 리듬엔 과하다.",
+    "화풍 스킬(cit-comm-webtoon, editorial-* 등)은 계정 스킬로 두고 이 하네스가 호출만 한다. 복사하지 않는다.",
+    "규칙이 손과 계속 싸우면 대개 규칙이 틀린 것이다. design-language.md §13 참조.",
+    "Figma 쓰기는 PreToolUse 훅이 기본 차단한다. 프론트매터 disallowed-tools 는 도구 이름이 환경마다 달라 못 믿는다. 쓰려면 FIGMA_WRITE=1."
+  ]
+}

@@ -1,0 +1,10 @@
+work/*.json
+!work/APPROVAL_TEMPLATE.json
+.codex-log/
+*.tmp
+*.bak
+*.secret
+.env
+.env.*
+*.pem
+*.key

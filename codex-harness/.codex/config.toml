@@ -1,0 +1,31 @@
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 2
+
+# 공식 Figma 플러그인은 그대로 켜져 있다. 아래 레거시/중복 사용자 MCP들은
+# 라우팅이 모호해지는 것을 막기 위해 이 프로젝트 안에서만 꺼둔다.
+[mcp_servers.figma-mcp]
+enabled = false
+
+[mcp_servers.figma-developer-mcp]
+enabled = false
+
+[mcp_servers.Figma]
+enabled = false
+
+[mcp_servers.FigmaMCPAgent]
+enabled = false
+
+[mcp_servers.TalkToFigma]
+enabled = false
+
+# Notion은 이 하네스 범위 밖이고 두 사용자 항목 모두 현재 인증이 필요하다.
+[mcp_servers.notion]
+enabled = false
+
+[mcp_servers.Notion]
+enabled = false
+
+# 이 로컬 서버는 smoke test를 통과하지 못했다; design-logic이 현재 사용 중인 검수자다.
+[mcp_servers.first-principles-design]
+enabled = false

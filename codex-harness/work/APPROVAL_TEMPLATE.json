@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 3,
+  "status": "pending",
+  "approvedBy": "",
+  "approvedAt": "",
+  "scope": {
+    "mode": "staging",
+    "fileKey": "",
+    "page": "",
+    "parentNodeId": "",
+    "operations": [],
+    "nodeIds": []
+  },
+  "planSha256": "",
+  "ssotSha256": "",
+  "signature": ""
+}

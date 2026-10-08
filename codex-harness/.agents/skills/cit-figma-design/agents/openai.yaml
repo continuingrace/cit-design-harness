@@ -1,0 +1,6 @@
+interface:
+  display_name: "CiT Figma Design"
+  short_description: "원본을 보존하며 CiT Figma 디자인을 제작합니다"
+  default_prompt: "$cit-figma-design 을 써서 보호된 Figma staging 영역에 이것을 만들고 결과를 검증해줘."
+policy:
+  allow_implicit_invocation: true

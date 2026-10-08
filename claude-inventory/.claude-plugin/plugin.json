@@ -1,0 +1,5 @@
+{
+  "name": "cit-design-harness",
+  "description": "CiT 디자인 언어를 지키는 하네스 — 세트 단위 배색 선언, 화풍 스킬 라우팅, 익스포트 전 검수 게이트",
+  "version": "0.1.6"
+}

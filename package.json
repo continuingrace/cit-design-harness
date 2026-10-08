@@ -1,0 +1,16 @@
+{
+  "name": "cit-design-harness",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "check:repo": "node scripts/check-repo.mjs",
+    "check:claude": "npm --prefix claude-inventory run check",
+    "test:claude": "npm --prefix claude-inventory run test:write-gate",
+    "check:codex": "npm --prefix codex-harness run validate",
+    "check:ssot": "npm --prefix codex-harness run check:ssot",
+    "test:codex": "npm --prefix codex-harness test",
+    "preflight": "npm run check:repo && npm run check:claude && npm run test:claude && npm run check:codex && npm run check:ssot && npm run test:codex"
+  }
+}

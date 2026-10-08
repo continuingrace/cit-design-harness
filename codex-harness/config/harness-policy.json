@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "authority": {
+    "designSsot": {
+      "path": "../claude-inventory/design-language.md",
+      "pathEnv": "CIT_DESIGN_SSOT",
+      "owner": "Claude",
+      "codexAccess": "read-only",
+      "copyIntoHarness": false
+    },
+    "inventoryRoot": {
+      "path": "../claude-inventory",
+      "pathEnv": "CIT_DESIGN_INVENTORY_ROOT",
+      "codexAccess": "read-only",
+      "cacheAccess": "deny-by-default"
+    }
+  },
+  "figma": {
+    "readChannel": "official-figma-plugin",
+    "writeChannel": "official-figma-plugin",
+    "inventoryPatUsage": "read-only-inventory-only",
+    "defaultWriteMode": "separate-staging-file-only",
+    "stagingFilePrefix": "AI_CODEX__",
+    "codexOriginalFileAccess": "view-only",
+    "codexMayWriteOriginals": false,
+    "originalChanges": "human-applies-reviewed-staging-output",
+    "maxConcurrentWritersPerTarget": 1,
+    "approvalMaxAgeHours": 24,
+    "approvalSource": "local-ed25519-signature",
+    "approvalKeysFile": "config/approvers.json",
+    "approvalSignatureAlgorithm": "Ed25519",
+    "writerRole": "main-agent-only",
+    "requiresPostWriteScreenshot": true
+  },
+  "agents": {
+    "figmaWriter": "main-agent-only",
+    "auditor": "read-only",
+    "parallelMutation": false
+  },
+  "secrets": {
+    "allowCredentialsInFiles": false,
+    "forbiddenTokenPrefixes": ["figd_", "ghp_", "github_pat_"]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "_comment": "design-language.md 의 확정 규칙을 스캐너가 읽는 형태로 옮긴 것. 이 파일을 고치면 design-language.md 도 같이 고친다. 이 저장소는 공개 데모이며, 아래 값은 전부 가상의 예시값이다 — 실제 조직의 디자인 규칙이 아니다.",
+  "source": "design-language.md v1.0 (demo)",
+  "fonts": {
+    "primary": "ExampleSans",
+    "allowedExtra": [
+      "ExampleMono"
+    ]
+  },
+  "tracking": {
+    "_concept_note": "ko 는 디자인 규칙(목표값)이고 severity 는 검사 허용오차다. 둘은 다른 개념이다 — design-language.md §3-1 참조.",
+    "ko": -0.015,
+    "tolerance": 0.003,
+    "_tolerance_note": "레거시 이진 판정용. 자간 이탈 판정은 아래 severity 구간이 대신한다.",
+    "severity": {
+      "_note": "검사 허용오차이지 디자인 규칙이 아니다. 자간 이탈 규칙에만 적용한다.",
+      "_intervals": "PASS |t-target|<=eps · FAIL t<=reviewLo 또는 t>reviewHi · WARN warnLo<=t<=warnHi · REVIEW 나머지. 빈틈 없음.",
+      "_zero_note": "letterSpacing 이 정확히 0 인 노드는 REVIEW 가 아니라 '자간 미설정'(WARN) 으로 보낸다.",
+      "appliesTo": ["자간 이탈"],
+      "target": -0.015,
+      "epsilon": 0.000001,
+      "warnLo": -0.025,
+      "warnHi": -0.005,
+      "reviewLo": -0.035,
+      "reviewHi": 0.0
+    },
+    "exemptSizes": {
+      "600x400": "예시 메시지 규격 — 문구 길이에 따라 자간으로 조절하는 운영 방식(데모)"
+    },
+    "judgeEnUpperLabel": false,
+    "_enUpperLabel_note": "영문 대문자 라벨은 표본이 충분히 쌓이기 전까지 자간을 판정하지 않는다 — 근거 없는 수치를 확정했다가 두 번 철회한 전례가 있다(데모 서사)."
+  },
+  "excludeFiles": {
+    "팀 D (예시)": "별도 브랜드 플랫폼(예시). 별도 기준으로 현 상태 유지"
+  },
+  "alignTolerance": 1.0,
+  "currentSinceYY": 1,
+  "_effectiveFrom_note": "새로 정한 규칙(좌마진·하단 금지영역)은 이 날짜 이후 만든 작업에만 적용한다. 프레임명의 YYMMDD 로 판단한다.",
+  "effectiveFrom": "000101",
+  "templates": [
+    {
+      "id": "ad-4x5",
+      "label": "1080×1350 광고 (예시)",
+      "size": "1080x1350",
+      "match": "광고|ad",
+      "leftMargin": 96,
+      "bottomReservedPx": 240,
+      "note": "하단 240px는 참여 버튼·캡션 영역(예시값). 핵심은 중앙 1080×1080"
+    },
+    {
+      "id": "cover-4x5",
+      "label": "1080×1350 표지·커버 (예시)",
+      "size": "1080x1350",
+      "match": "표지|커버|cover",
+      "leftMargin": 112
+    },
+    {
+      "id": "post-4x5",
+      "label": "1080×1350 일반 게시물 (예시)",
+      "size": "1080x1350",
+      "match": "*",
+      "leftMargin": 72,
+      "note": "기본값(예시). 위 패턴에 안 걸리면 전부 여기로"
+    }
+  ]
+}

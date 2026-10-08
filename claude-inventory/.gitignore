@@ -1,0 +1,7 @@
+﻿.cache/
+out/
+.env
+.env.*
+*.secret
+*.pem
+*.key

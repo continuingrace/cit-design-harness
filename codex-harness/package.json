@@ -1,0 +1,16 @@
+{
+  "name": "cit-codex-design-harness",
+  "version": "0.5.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "validate": "node scripts/validate-harness.mjs",
+    "test": "node scripts/test-validator.mjs && node scripts/test-approval.mjs",
+    "verify:approval": "node scripts/verify-approval.mjs",
+    "setup:approver": "node scripts/setup-approver.mjs",
+    "sign:approval": "node scripts/sign-approval.mjs",
+    "fingerprint": "node scripts/fingerprint-file.mjs",
+    "check:ssot": "node scripts/check-ssot.mjs"
+  }
+}
