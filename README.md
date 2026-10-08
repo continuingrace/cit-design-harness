@@ -1,20 +1,26 @@
-# CiT 디자인 하네스
+# CiT 디자인 하네스 (공개 데모)
 
-CiT의 Claude·Codex 디자인 작업 절차를 한 저장소에서 관리한다. `claude-inventory/`는 디자인 언어 SSOT와 Figma 읽기 전용 인벤토리를 관리한다. `codex-harness/`는 그 SSOT를 읽어 Figma 제작과 독립 검수를 안내한다. 각 파일의 책임과 쓰기 경계는 [구조 안내](docs/architecture.md), Windows 설정과 실행은 [시작 안내](docs/getting-started.md)를 참고한다.
+[![Harness preflight](https://github.com/continuingrace/cit-design-harness/actions/workflows/preflight.yml/badge.svg?branch=main)](https://github.com/continuingrace/cit-design-harness/actions/workflows/preflight.yml)
 
-이 저장소는 Figma 디자인 시스템을 지키는 Claude·Codex 하네스의 공개 데모다. `claude-inventory/files.json`·`design-language.md`·`spec.json` 등에 들어 있는 조직명·Figma 파일 키·실측 수치는 전부 가상의 예시값이며, 실제로 운영팀에 맞춰 쓸 때는 그 값들을 채운 저장소를 비공개로 유지하는 것을 권장한다. GitHub Pages를 사용하지 않는다. `.cache/`, `out/`, 토큰, 생성된 Figma 응답은 Git에 올리지 않는다.
+Figma 디자인 시스템을 지키기 위해 **Claude 하네스**와 **Codex 하네스**를 한 저장소에서 같은 기준 문서로 묶어 돌리는 구조를 보여주는 **공개 데모**다. 실제 CiT 업무 자료가 아니다 — 조직명(`팀 A`~`팀 D`), Figma 파일 키·노드 ID(`EXAMPLE...`), 서체·자간·마진 같은 디자인 수치는 전부 가상의 예시값이고, 승인 서명·공개키 파일(`codex-harness/config/approvers.json`)도 빈 템플릿이다.
 
-## 전체 검사
+## 구성
 
-Node.js 18 이상이 필요하다. 패키지를 설치하지 않아도 되며 저장소 루트에서 아래 한 명령으로 두 하네스의 사전 검사와 테스트를 실행한다. 혼자 운영하는 승인 흐름은 Codex 하네스에서 만든 Ed25519 키로 로컬 서명한다. GitHub 동료나 `gh` 로그인은 필요하지 않다.
+- `claude-inventory/` — 디자인 언어 SSOT(`design-language.md`)와 그 SSOT를 기계가 읽는 규칙(`spec.json`), Figma를 읽기 전용으로 스캔하는 `figma-inventory.mjs`. Figma 쓰기 도구 호출은 `block-figma-write.mjs`(PreToolUse 훅)가 기본 차단한다.
+- `codex-harness/` — 같은 SSOT를 읽기 전용으로 참조한다. Figma 제작은 원본이 아닌 별도 staging 파일에만 쓰고, 쓰기 전 Ed25519 서명 승인(`work/<작업>/approval.json` + `verify-approval.mjs`)을 통과해야 한다.
+- 두 하네스는 기준 파일(SSOT)은 공유하지만 쓰기 권한은 공유하지 않는다. 전체 구조는 [`docs/architecture.md`](docs/architecture.md), 설치·실행은 [`docs/getting-started.md`](docs/getting-started.md)에 정리했다.
+
+## 설치와 preflight 실행
+
+Node.js 18 이상이 필요하고, 별도 패키지 설치는 없다. 저장소 루트에서:
 
 ```powershell
 npm run preflight
 ```
 
-GitHub Actions는 `main` push와 pull request 때 동일한 검사를 실행한다. 병합 전 필수 조건으로 만들려면 GitHub 브랜치 보호에서 `preflight` 검사를 required status check로 설정한다.
+이 한 명령이 저장소 전체 비밀값·링크 검사, 두 하네스의 선언-실재 대조, Figma 쓰기 게이트 회귀 테스트(45건), Codex 승인 검증 로직 테스트를 순서대로 실행한다. 위 배지가 가리키는 GitHub Actions(`Harness preflight`)가 `main` push와 PR마다 동일한 검사를 돌린다.
 
-## 개별 점검
+개별 점검:
 
 ```powershell
 cd claude-inventory
@@ -29,8 +35,8 @@ npm test
 npm run check:ssot
 ```
 
-Codex 하네스는 기본 설정으로 같은 저장소의 Claude SSOT를 읽는다. 별도 로컬 SSOT를 쓸 때만 `CIT_DESIGN_SSOT`를 세션 환경변수로 지정하며, Codex 폴더에 SSOT 사본을 만들지 않는다. Claude 인벤토리 실행에는 권한을 읽기로 제한한 `FIGMA_TOKEN`과 Figma 네트워크 연결이 필요하다.
+## 실제 조직에 맞춰 쓰려면
 
-코드 근거, 점수, 남은 제한은 [검토 보고서](REVIEW.md)에 정리했다.
+`claude-inventory/files.json`·`design-language.md`·`spec.json`의 예시값을 실제 Figma 파일 키와 확정된 디자인 규칙으로 바꾸고, `codex-harness/config/approvers.json`에 본인의 Ed25519 공개키를 등록한다. 승인 키 설정은 [`docs/approval-key-setup.md`](docs/approval-key-setup.md), Figma 원본/staging 권한 분리 점검은 [`docs/figma-access-smoke-test.md`](docs/figma-access-smoke-test.md), GitHub 브랜치 보호 설정은 [`docs/github-approval-setup.md`](docs/github-approval-setup.md)를 따른다. **실제 조직 식별자나 승인 키를 채운 뒤에는 그 저장소를 비공개로 유지할 것을 권장한다.**
 
-Codex 승인 키 설정은 [승인 설정 안내](docs/approval-key-setup.md), 실제 Figma 권한 확인은 [로컬 smoke test](docs/figma-access-smoke-test.md)를 참고한다. `main` 브랜치에서 `preflight`를 필수 상태 검사로 지정하는 GitHub 설정은 [GitHub 보호 설정](docs/github-approval-setup.md)을 참고한다. GitHub Actions는 코드 preflight를 자동화할 뿐, 작업 승인을 대신하지 않는다.
+코드 근거와 자체 검토 내역은 [`REVIEW.md`](REVIEW.md)에 정리했다.
